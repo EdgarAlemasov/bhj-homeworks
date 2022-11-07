@@ -10,27 +10,28 @@ const userId = document.getElementById("user_id");
 if (localStorage.getItem("id")) {
     welcome.classList.add("welcome_active");
     userId.textContent = `${localStorage.getItem("id")}`;
-} else {
-    signUp.addEventListener("submit", (event) => {
-        const formData = new FormData(signUp);
-        const request = new XMLHttpRequest();
-
-        request.open("POST", "https://netology-slow-rest.herokuapp.com/auth.php");
-        request.addEventListener("load", function () {
-            // console.log(this.response)
-            signUp.reset();
-            if (this.response.success == true) {
-                welcome.classList.add("welcome_active");
-                localStorage.setItem("id", `${this.response.user_id}`);
-                userId.textContent = `${this.response.user_id}`;
-            } else {
-                alert("Неверный логин или пароль");
-            };
-        });
-        request.responseType = "json";
-        request.send(formData);
-        event.preventDefault();
-    })
 }
+
+signUp.addEventListener("submit", (event) => {
+    const formData = new FormData(signUp);
+    const request = new XMLHttpRequest();
+
+    request.open("POST", "https://netology-slow-rest.herokuapp.com/auth.php");
+    request.addEventListener("load", function () {
+        // console.log(this.response)
+        signUp.reset();
+        if (this.response.success == true) {
+            welcome.classList.add("welcome_active");
+            localStorage.setItem("id", `${this.response.user_id}`);
+            userId.textContent = `${this.response.user_id}`;
+        } else {
+            alert("Неверный логин или пароль");
+        };
+    });
+    request.responseType = "json";
+    request.send(formData);
+    event.preventDefault();
+})
+
 
 
